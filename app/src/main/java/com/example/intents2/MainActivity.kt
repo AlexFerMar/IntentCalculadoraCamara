@@ -44,6 +44,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    /**
+     * Funcion que comprueba si el resultado dado por el usuario es correcto
+     * Devuelve un boolean indicando si ha acertado o no
+     */
+
     fun comprobarResultado(numero1:Int,numero2: Int,resultado:Int):Boolean {
 
         val test=numero1 + numero2
@@ -51,14 +56,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return test==resultado
     }
 
+    /**
+     * Funcion que recoge el resultado de los intent y realiza operaciones segun el intent que lo hay devuelto
+     */
     @Deprecated("Deprecated a partir de API 30")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        //Comprueba que la activiti haya terminado bien
         if (resultCode != Activity.RESULT_OK) return
 
+        //Comprueba que la data del intent no sea nula
         if (data != null) {
             when (requestCode) {
+                //Si el request code devuelto es el de la calculadora se ejecuta este bloque de codigo
                 CALCULADORA -> {
 
                     val numero1=data.getIntExtra("numero1",0)
@@ -70,6 +81,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
                 }
+                //Si el request code devuelto es el de la camara se ejecuta este bloque de codigo
                 CAMARA -> {
 
                     val photo = data!!.extras!!["data"] as Bitmap?
@@ -82,21 +94,22 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
+    /**
+     * Definimos los clickListener de los botones, dependiendo del id de cada boton el codigo se ejecutara de una forma u otra
+     */
     override fun onClick(view: View?) {
         when (view?.id) {
 
             btCamara.id -> {
-
+                //Llamamos el intent de la camara
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(cameraIntent, CAMARA)
 
 
             }
             btCalculo.id -> {
-
+                //Llamamos el intent de la calculadora
                 val intent = Intent(this, MainActivity2::class.java)
-
                 startActivityForResult(intent,CALCULADORA)
 
             }

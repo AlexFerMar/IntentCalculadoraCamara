@@ -33,6 +33,7 @@ class MainActivity2 : AppCompatActivity(),View.OnClickListener {
         btComprobar = findViewById(R.id.btComprobar)
         btComprobar.setOnClickListener(this)
 
+        //Con esto guardamos ambos numeros en los datos del intent, para que la activity 1 se encargue de las comprobaciones
         intent.putExtra("numero1",numero1)
         intent.putExtra("numero2",numero2)
 
@@ -42,15 +43,20 @@ class MainActivity2 : AppCompatActivity(),View.OnClickListener {
 
         val resultado=etResultado.text.toString()
 
+        //Con esto guardamos el resultado dado por el usuario en los datos del intent, para que la activity 1 se encargue de las comprobaciones
         intent.putExtra("resultado",resultado.toInt())
 
+        //Con esto se indica que el resultado se ha dado correctamente
         setResult(Activity.RESULT_OK,intent)
 
+        //Terminamos la activity
         finish()
 
     }
 
-
+    /**
+     * Funcion que escoge un numero aleatorio del 0 al 100
+     */
     fun numeroAleatorio():Int {
 
         return (0..100).random()
