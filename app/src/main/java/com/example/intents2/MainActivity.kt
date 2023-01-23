@@ -1,14 +1,18 @@
 package com.example.intents2
 
+import android.R.attr
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -68,6 +72,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 CAMARA -> {
 
+                    val photo = data!!.extras!!["data"] as Bitmap?
+                    ivFoto.setImageBitmap(photo)
 
                 }
 
@@ -82,7 +88,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             btCamara.id -> {
 
-
+                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(cameraIntent, CAMARA)
 
 
             }
