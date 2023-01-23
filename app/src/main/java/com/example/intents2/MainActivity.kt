@@ -1,6 +1,8 @@
 package com.example.intents2
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -15,6 +17,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btCamara: Button
     private lateinit var ivFoto: ImageView
     private lateinit var tvResultado: TextView
+
+    private val CALCULADORA=1
+    private val CAMARA=2
 
 
 
@@ -35,6 +40,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    fun comprobarResultado(numero1:Int,numero2: Int,resultado:Int):Boolean {
+
+        val test=numero1 + numero2
+
+        return test==resultado
+    }
+
+    @Deprecated("Deprecated a partir de API 30")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode != Activity.RESULT_OK) return
+
+        if (data != null) {
+            when (requestCode) {
+                CALCULADORA -> {
+
+                    val numero1=data.getIntExtra("numero1",0)
+                    val numero2=data.getIntExtra("numero2",0)
+                    val resultado=data.getIntExtra("resultado",0)
+
+
+                    tvResultado.text=comprobarResultado(numero1,numero2,resultado).toString()
+
+
+                }
+                CAMARA -> {
+
+
+                }
+
+
+            }
+        }
+    }
+
+
     override fun onClick(view: View?) {
         when (view?.id) {
 
@@ -42,10 +84,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
+
             }
             btCalculo.id -> {
 
+                val intent = Intent(this, MainActivity2::class.java)
 
+                startActivityForResult(intent,CALCULADORA)
 
             }
 
